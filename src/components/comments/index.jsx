@@ -4,6 +4,7 @@ import { useComments } from "../../hooks/comment";
 
 import { usePost } from "../../hooks/posts";
 import ComponentList from "../comments/CommentList";
+import Loading from "../Loading";
 import Post from "../post";
 import NewComment from "./NewComment";
 
@@ -12,14 +13,14 @@ export default function Comments() {
   const { post, isLoading: postLoading } = usePost(id);
   const { user, isLoading: userLoading } = useAuth();
 
-  if (userLoading || postLoading) return "Comments parents Loading...";
+  if (userLoading || postLoading) return <Loading />;
 
   return (
     <>
       <div className="max-h-[100px] h-[18vh] w-full"></div>
 
       <div className="flex items-center justify-center w-[100vw] h-auto py-2">
-        <div className="py-4 flex items-start justify-center max-w-[1000px] w-[50%]">
+        <div className="py-4 flex items-start justify-center max-w-[1000px] w-full lg:w-[50%]">
           <div className="w-[90%]">
             <Post postDetails={post} />
 

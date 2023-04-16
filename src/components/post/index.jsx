@@ -37,6 +37,8 @@ export default function Post({ postDetails }) {
 
   const { deletePost, isLoading: deleteLoading } = useDeletePost(id);
 
+  let convertedPost = post.replace(/\n/g, "\n");
+
   if (isLoading) return;
 
   return (
@@ -111,7 +113,7 @@ export default function Post({ postDetails }) {
           {/* big text jagah */}
         </div>
         <div className="text-gray-600 font-semibold py-2 mb-2 mx-3 px-2">
-          <p>{post}</p>
+          <p>{convertedPost}</p>
         </div>
 
         <div className="py-3 flex justify-start  border-t border-gray-100">

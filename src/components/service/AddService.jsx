@@ -1,12 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/auth";
-import { useUpdateInfo } from "../../hooks/users";
+import { useAddService } from "../../hooks/service";
 
-export default function EditInfo() {
-  const { user, isLoading: authLoading } = useAuth();
-  const { updateInfo, isLoading } = useUpdateInfo(user?.id);
-
+function AddService() {
   const {
     register,
     handleSubmit,
@@ -14,22 +11,26 @@ export default function EditInfo() {
     formState: { errors },
   } = useForm();
 
-  const handleUpdateInfo = async (data) => {
-    const succeeded = await updateInfo({
-      name: data.name,
-      profession: data.profession,
-      country: data.country,
+  const { user, isLoading: isUserLoading } = useAuth();
+  const { addService, isLoading } = useAddService();
+
+  const handleAddService = async (data) => {
+    const uploaded = await addService({
+      uid: user.id,
+      role: data.title,
+      description: data.description,
+      salary: data.salary,
+      link: data.link,
     });
 
-    if (succeeded) reset();
+    if (uploaded) reset();
   };
 
-  if (authLoading) return "...";
-
+  if (isUserLoading) return;
   return (
     <>
       <form
-        onSubmit={handleSubmit(handleUpdateInfo)}
+        onSubmit={handleSubmit(handleAddService)}
         className="py-10 w-full max-w-sm"
       >
         <div className="md:flex md:items-center mb-6">
@@ -38,7 +39,7 @@ export default function EditInfo() {
               className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               htmlFor="inline-full-name"
             >
-              Name
+              Job Title
             </label>
           </div>
           <div className="md:w-2/3">
@@ -46,9 +47,10 @@ export default function EditInfo() {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
               id="inline-full-name"
               type="text"
-              {...register("name", { required: true })}
-              placeholder="Ghous Muhammad"
+              {...register("title", { required: true, maxLength: 35 })}
+              placeholder="Frontend Engineer"
             />
+            <p className="text-red-400">{errors?.title?.message}</p>
           </div>
         </div>
 
@@ -58,7 +60,7 @@ export default function EditInfo() {
               className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               htmlFor="inline-full-name"
             >
-              Profession
+              Description
             </label>
           </div>
           <div className="md:w-2/3">
@@ -66,9 +68,10 @@ export default function EditInfo() {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
               id="inline-full-name"
               type="text"
-              {...register("profession", { required: true })}
-              placeholder="Frontend developer"
+              {...register("description", { required: true, maxLength: 46 })}
+              placeholder="Senior Frontend developer / software engineer"
             />
+            <p className="text-red-400">{errors?.description?.message}</p>
           </div>
         </div>
 
@@ -78,7 +81,27 @@ export default function EditInfo() {
               className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               htmlFor="inline-full-name"
             >
-              Country
+              Salary
+            </label>
+          </div>
+          <div className="md:w-2/3">
+            <input
+              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
+              id="inline-full-name"
+              type="number"
+              {...register("salary", { required: true, maxLength: 10 })}
+              placeholder="72,000"
+            />
+            <p className="text-red-400">{errors?.salary?.message}</p>
+          </div>
+        </div>
+        <div className="md:flex md:items-center mb-6">
+          <div className="md:w-1/3">
+            <label
+              className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+              htmlFor="inline-full-name"
+            >
+              Linkedin
             </label>
           </div>
           <div className="md:w-2/3">
@@ -86,8 +109,8 @@ export default function EditInfo() {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
               id="inline-full-name"
               type="text"
-              {...register("country", { required: true })}
-              placeholder="Pakistan"
+              {...register("link", { required: true })}
+              placeholder="https:portfolio.com"
             />
           </div>
         </div>
@@ -96,10 +119,10 @@ export default function EditInfo() {
           <div className="md:w-1/3" />
           <div className="md:w-2/3">
             <button
-              className="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
+              class="py-2 px-8 rounded-full text-white bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 "
             >
-              Save Changes
+              {isLoading ? "uploading..." : "Save Changes"}
             </button>
           </div>
         </div>
@@ -107,3 +130,5 @@ export default function EditInfo() {
     </>
   );
 }
+
+export default AddService;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PROTECTED } from "../../lib/routes";
+import ProfilePicture from "../elements/ProfilePicture";
 
 export default function Developer({ developer }) {
   return (
@@ -9,11 +10,7 @@ export default function Developer({ developer }) {
       <div className="rounded-md card border h-40 max-h-44 w-80 hover:shadow-none relative flex flex-col mx-auto shadow-lg m-5">
         <div className="w-full h-20 max-h-20 opacity-80 absolute top-0 Zandox bg-black"></div>
         <div className="profile w-full flex m-3 ml-4 text-white">
-          <img
-            className="w-28 h-28 p-1 bg-white rounded-full"
-            src={developer.avatar}
-            alt=""
-          />
+          <ProfilePicture size="card" user={developer} />
           <div className="title mt-11 ml-3 font-bold flex flex-col">
             <div className="name  break-words">{developer.name}</div>
 

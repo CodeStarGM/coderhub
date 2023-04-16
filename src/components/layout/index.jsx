@@ -26,9 +26,8 @@ export default function Layout() {
     <>
       <Navbar />
       <Outlet />
-
       <div className="">
-        <main className=" w-[300px] absolute left-4 lg:top-24  hidden lg:flex items-start justify-around">
+        <main className="w-[300px] absolute left-4 lg:top-24  hidden lg:flex items-start justify-around">
           <Sidebar />
         </main>
       </div>

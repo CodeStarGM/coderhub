@@ -13,7 +13,7 @@ export default function Comment({ comment }) {
   const { user: authUser, isLoading: authLoading } = useAuth();
   const { deleteComment, isLoading: deletingComment } = useDeleteComment(id);
 
-  if (isLoading) return "User is loading...";
+  if (isLoading) return <div className="spinnerTiny"></div>;
 
   return (
     <>

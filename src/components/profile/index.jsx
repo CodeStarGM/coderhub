@@ -1,12 +1,15 @@
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 import { usePosts } from "../../hooks/posts";
+import { useService } from "../../hooks/service";
 import { useUsers } from "../../hooks/users";
 import ProfilePicture from "../elements/ProfilePicture";
 import Loading from "../Loading";
 import PostLists from "../post/PostLists";
+import Service from "../service";
+import AddService from "../service/AddService";
 import EditInfo from "./EditInfo";
 import EditProfile from "./EditProfile";
 
@@ -16,7 +19,9 @@ export default function Profile() {
   const { user, isLoading: loadingUser } = useUsers(id);
   const [editProfile, setEditProfile] = useState(false);
   const [editInfo, setEditInfo] = useState(false);
+  const [addService, setAddService] = useState(false);
   const { user: authUser, isLoading: authLoading } = useAuth();
+  const { service, isLoading: serviceLoading } = useService();
 
   const handleSetProfile = () => {
     setEditProfile(!editProfile);
@@ -26,15 +31,23 @@ export default function Profile() {
     setEditInfo(!editInfo);
     setEditProfile(false);
   };
+  const handleAddService = () => {
+    setAddService(!addService);
+  };
 
-  if (isLoading || loadingUser || authLoading) return <Loading />;
+  if (isLoading || loadingUser || authLoading || serviceLoading)
+    return <Loading />;
+  const filtered = service.filter((service) => {
+    return service.uid === authUser.id;
+  });
+  const isRoleAdded = filtered.length < 1 ? true : false;
 
   return (
     <>
       <div className="max-h-[100px] h-[18vh] w-full"></div>
 
       <div className="flex items-center justify-center w-[100vw] h-auto py-2">
-        <div className="py-4 flex items-start justify-center max-w-[1000px] w-[50%] ">
+        <div className="py-4 flex items-start justify-center max-w-[1000px] w-full lg:w-[50%] ">
           <article className="w-[80%]">
             <div className="flex flex-col items-center bg-white shadow rounded-lg mb-6 p-4">
               <div className="flex items-center justify-between px-2  w-full h-auto">
@@ -115,9 +128,9 @@ export default function Profile() {
                 </div>
               </div>
 
-              <footer className="flex w-full justify-between mt-2">
+              <footer className="flex lg:flex-row flex-col space-y-4 lg:space-y-0  w-full lg:justify-between mt-2">
                 <div className="flex gap-2">
-                  <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 space-x-2 px-2 rounded-full text-blue-400 cursor-pointer">
+                  <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 space-x-2  py-2 px-2 rounded-full text-blue-400 cursor-pointer">
                     <svg
                       viewBox="0 0 24 24"
                       width={20}
@@ -135,28 +148,7 @@ export default function Profile() {
                         d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
                       />
                     </svg>
-                    <p className="text-sm">Posts : {posts.length}</p>
-                  </span>
-
-                  <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 space-x-2 px-2 rounded-full text-blue-400 cursor-pointer">
-                    <svg
-                      viewBox="0 0 24 24"
-                      width={20}
-                      height={20}
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="css-i6dzq1"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                      />
-                    </svg>
-                    <p className="text-sm">Likes : {posts.length}</p>
+                    <p className="text-sm">Total Posts : {posts.length}</p>
                   </span>
                 </div>
                 {!authLoading && authUser.id === user.id && (
@@ -181,6 +173,31 @@ export default function Profile() {
               {editProfile && <EditProfile />}
               {editInfo && <EditInfo />}
             </div>
+
+            {/* services here */}
+            <div className="pb-4 space-y-4">
+              <h2 className="text-lg font-semibold">Open to Work</h2>
+
+              {isRoleAdded && (
+                <div className="w-full flex items-center justify-center">
+                  <button
+                    onClick={handleAddService}
+                    class="py-2 px-8 rounded-full text-white bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 "
+                  >
+                    Add Job Role
+                  </button>
+                </div>
+              )}
+
+              {addService && (
+                <div className="w-full flex items-center justify-center">
+                  <AddService />
+                </div>
+              )}
+
+              {!isRoleAdded && <Service authUser={authUser} />}
+            </div>
+            {/* services here */}
 
             {/* here */}
             <div className="space-y-6">

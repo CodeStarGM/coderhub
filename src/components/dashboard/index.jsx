@@ -26,7 +26,7 @@ export default function Dashboard() {
       <div className="max-h-[100px] h-[18vh] w-full"></div>
 
       <div className="flex items-center justify-center w-[100vw] h-auto py-2">
-        <div className="py-4 flex items-start justify-center max-w-[1000px] w-[50%]">
+        <div className="py-4 flex items-start justify-center max-w-[1000px] w-full lg:w-[50%]">
           <article className="w-[80%]">
             <form
               onSubmit={handleSubmit(handleAddPost)}
@@ -35,7 +35,7 @@ export default function Dashboard() {
               <textarea
                 name="message"
                 rows={5}
-                placeholder="Type something..."
+                placeholder="What's Happening..."
                 className="outline-green-500 w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                 defaultValue={""}
                 {...register("post", { required: true })}

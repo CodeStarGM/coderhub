@@ -67,26 +67,29 @@ export default function Navbar() {
               <div className="block relative">
                 <button
                   type="button"
-                  className="inline-block py-2 px-3 hover:bg-gray-200 rounded-full relative "
+                  className="inline-block py-2 px-1  hover:bg-gray-200 rounded-full relative "
                 >
                   <div className="flex items-center h-5">
-                    <div className="_xpkakx">
-                      <svg
-                        viewBox="0 0 16 16"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        role="presentation"
-                        focusable="false"
-                        style={{
-                          display: "block",
-                          height: 16,
-                          width: 16,
-                          fill: "currentcolor",
-                        }}
-                      >
-                        <path d="m8.002.25a7.77 7.77 0 0 1 7.748 7.776 7.75 7.75 0 0 1 -7.521 7.72l-.246.004a7.75 7.75 0 0 1 -7.73-7.513l-.003-.245a7.75 7.75 0 0 1 7.752-7.742zm1.949 8.5h-3.903c.155 2.897 1.176 5.343 1.886 5.493l.068.007c.68-.002 1.72-2.365 1.932-5.23zm4.255 0h-2.752c-.091 1.96-.53 3.783-1.188 5.076a6.257 6.257 0 0 0 3.905-4.829zm-9.661 0h-2.75a6.257 6.257 0 0 0 3.934 5.075c-.615-1.208-1.036-2.875-1.162-4.686l-.022-.39zm1.188-6.576-.115.046a6.257 6.257 0 0 0 -3.823 5.03h2.75c.085-1.83.471-3.54 1.059-4.81zm2.262-.424c-.702.002-1.784 2.512-1.947 5.5h3.904c-.156-2.903-1.178-5.343-1.892-5.494l-.065-.007zm2.28.432.023.05c.643 1.288 1.069 3.084 1.157 5.018h2.748a6.275 6.275 0 0 0 -3.929-5.068z" />
-                      </svg>
-                    </div>
+                    <Link
+                      to="https://github.com/CodeStarGM/coderhub"
+                      target="_blank"
+                    >
+                      <div className="_xpkakx">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={30}
+                          height={30}
+                          viewBox="0 0 24 24"
+                          className="fill-black hover:scale-125 transition"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z"
+                          />
+                        </svg>
+                      </div>
+                    </Link>
                   </div>
                 </button>
               </div>
@@ -150,7 +153,7 @@ export default function Navbar() {
       {menu ? (
         <div
           onClick={toggleMenuBar}
-          className="shadow-xl z-50 space-y-2 rounded-md border border-gray-200 px-2 right-10 top-[5.2rem] fixed h-auto py-4 w-[30vw] lg:w-[18vw] bg-white"
+          className="shadow-xl z-50 space-y-2 rounded-md border border-gray-200 px-2 right-10 top-[5.2rem] fixed h-auto py-4 w-[50vw] lg:w-[18vw] bg-white"
         >
           <Link to="/protected/dashboard">
             <div className="flex items-center space-x-2 cursor-pointer px-2 py-2 hover:bg-gray-200 rounded-md">

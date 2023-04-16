@@ -4,7 +4,7 @@ import Comment from "./Comment";
 export default function CommentList({ post }) {
   const { comments, isLoading } = useComments(post.id);
 
-  if (isLoading) return "Single Comment Loading...";
+  if (isLoading) return <div className="spinnerTiny"></div>;
 
   return (
     <>
