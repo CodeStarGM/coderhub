@@ -1,4 +1,4 @@
-# Coderhub
+# Codershub
 
 A social media platform designed specifically for software engineers to connect with each other✨
 
